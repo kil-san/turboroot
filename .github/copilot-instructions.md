@@ -29,8 +29,13 @@ This is a monorepo managed with [Turborepo](https://turbo.build/), using [pnpm w
 - Use [NestJS](https://nestjs.com/) and TypeScript only.
 - Every service must be implemented as a NestJS module (e.g., `profile.service.module.ts`).
 - Every controller must be implemented as a NestJS module (e.g., `profile.controller.module.ts`).
-- Add each new controller module to controller.module.ts
+- Add each new controller module to `controller.module.ts`
 - Organize code under `src/services` and `src/controllers`.
+- Create controller dtos in `packages/types` and import them from `@repo/types`.
+- Define dtos with `zod` in `packages/types` and infer TypeScript types from them.
+- Always validate incoming requests in controllers using `zod` schemas.
+- Always map service responses to dtos before returning them from controllers.
+- Use dependency injection for services and repositories.
 - Always write unit tests for services and controllers using Jest. Mock dependencies as needed.
 
 ### 3. Shared Types
