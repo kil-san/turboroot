@@ -1,0 +1,22 @@
+{
+  "name": "@repo/types",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "tsc --watch",
+    "build": "tsc"
+  },
+  "exports": {
+    "./dto": {
+      "types": "./src/dto/index.ts",
+      "default": "./dist/dto/index.js"
+    }
+  },
+  "devDependencies": {
+    "@repo/typescript-config": "workspace:*",
+    "typescript": "latest"
+  },
+  "dependencies": {
+    "zod": "^4.1.11"
+  }
+}
