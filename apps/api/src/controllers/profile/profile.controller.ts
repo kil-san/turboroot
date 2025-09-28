@@ -1,5 +1,5 @@
 import { BadRequestException, Body, Controller, Get, Post } from '@nestjs/common'
-import { ProfileService } from 'services/profile'
+import { ProfileService } from '@services/profile'
 import { UpdateProfileRequestSchema, type UpdateProfileRequest, type ProfileResponse } from '@repo/types/dto'
 
 @Controller('profile')

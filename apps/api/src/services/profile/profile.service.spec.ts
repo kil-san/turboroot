@@ -14,7 +14,7 @@ describe('HelloService', () => {
 
   describe('getProfile', () => {
     it('should return default profile', () => {
-      expect(service.getProfile()).toBe({ firstName: 'John', lastName: 'Doe' })
+      expect(service.getProfile()).toMatchObject({ firstName: 'John', lastName: 'Doe' })
     })
   })
 
@@ -25,7 +25,7 @@ describe('HelloService', () => {
           firstName: 'Jane',
           lastName: 'Doe',
         })
-      ).toBe({ firstName: 'Jane', lastName: 'Doe' })
+      ).toMatchObject({ firstName: 'Jane', lastName: 'Doe' })
     })
   })
 })
