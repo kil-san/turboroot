@@ -3,13 +3,13 @@ import styles from './page.module.css'
 import WelcomeMessage from 'app/components/WelcomeMessage/WelcomeMessage.client'
 import UpdateProfileForm from './components/UpdateProfileForm/UpdateProfileForm.client'
 import { getQueryClient } from '@/tanstack/get-query-client'
-import { profileOptions } from '@/hooks/useProfile/profile.options'
+import { createProfileQueryOptions } from '@/hooks/useProfile/profile.options'
 import { dehydrate, HydrationBoundary } from '@tanstack/react-query'
 
 export default function Home() {
   const queryClient = getQueryClient()
 
-  void queryClient.prefetchQuery(profileOptions)
+  void queryClient.prefetchQuery(createProfileQueryOptions())
 
   return (
     <div className={styles.page}>
