@@ -19,9 +19,10 @@ This is a monorepo managed with [Turborepo](https://turbo.build/), using [pnpm w
 - **Global components** must live in `src/components`.
 - **Page-specific components** must live in the relevant `src/app/[page]/components` folder.
 - Shared hooks, utilities, and types should be placed in their respective folders under `src`.
-- Use [TanStack Query](https://tanstack.com/query/latest) for all data fetching in the frontend. Implement queries and mutations inside the `src/hooks` directory.
-- Always prefer `useSuspenseQuery` to preload data on the server side for pages/components that support React Suspense.
-- Split query/mutation options (such as keys, fetchers, and config) into a separate `profile.options.ts` (or similar) file so they can be reused for prefetching and in hooks.
+- Use [TanStack Query](https://tanstack.com/query/latest) for all client based data fetching in the frontend. Implement queries and mutations inside the `src/hooks` directory.
+- Server components should be used for data fetching where possible if the data does not change based on user interaction and does not need to be synchronized.
+- Always prefer `useSuspenseQuery` in hooks to preload data on the server side for pages/components.
+- Split query/mutation options (such as keys, fetchers, and config) into a separate `entity.options.ts` (or similar) file so they can be reused for prefetching and in hooks.
 
 ### 2. Backend Code
 
@@ -32,11 +33,24 @@ This is a monorepo managed with [Turborepo](https://turbo.build/), using [pnpm w
 - Add each new controller module to `controller.module.ts`
 - Organize code under `src/services` and `src/controllers`.
 - Create controller dtos in `packages/types` and import them from `@repo/types`.
-- Define dtos with `zod` in `packages/types` and infer TypeScript types from them.
-- Always validate incoming requests in controllers using `zod` schemas.
+- Define dtos with `zod` in `packages/types` and infer TypeScript types from them. Example:
+  ```ts
+  import { z } from 'zod'
+
+  export const UpdateProfileRequestSchema = z.object({
+    firstName: z.string().min(1),
+    lastName: z.string().min(1),
+  })
+
+  export type UpdateProfileRequest = z.infer<typeof UpdateProfileRequestSchema>
+  ```
+- Always validate incoming requests in controllers using `zod` schemas and return bad request appropriately.
+- Services should define their own types and must never import from `@repo/types`.
 - Always map service responses to dtos before returning them from controllers.
 - Use dependency injection for services and repositories.
-- Always write unit tests for services and controllers using Jest. Mock dependencies as needed.
+- Always write unit tests for services and controllers using Jest.
+- Always mock dependencies in unit tests.
+- Use `@golevelup/ts-jest` for creating deep mocks of classes and interfaces.
 
 ### 3. Shared Types
 
@@ -55,11 +69,13 @@ This is a monorepo managed with [Turborepo](https://turbo.build/), using [pnpm w
 
 - **Frontend:**
   ```ts
-  import { ProfileDto } from '@repo/types/dto'
+  import { ProfileResponse } from '@repo/types/dto'
+  import { UpdateProfileRequest } from '@repo/types/dto'
   ```
 - **Backend:**
   ```ts
-  import { ProfileDto } from '@repo/types/dto'
+  import { ProfileResponse } from '@repo/types/dto'
+  import { UpdateProfileRequest } from '@repo/types/dto'
   ```
 
 ## Additional Notes
