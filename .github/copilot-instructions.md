@@ -45,7 +45,7 @@ This is a monorepo managed with [Turborepo](https://turbo.build/), using [pnpm w
   export type UpdateProfileRequest = z.infer<typeof UpdateProfileRequestSchema>
   ```
 - Always validate incoming requests in controllers using `zod` schemas and return bad request appropriately.
-- Services should define their own types and must never import from `@repo/types`.
+- Services should define their own types in `service.types.ts` and must never import from `@repo/types`.
 - Always map service responses to dtos before returning them from controllers.
 - Use dependency injection for services and repositories.
 - Always write unit tests for services and controllers using Jest.
@@ -55,7 +55,10 @@ This is a monorepo managed with [Turborepo](https://turbo.build/), using [pnpm w
 ### 3. Shared Types
 
 - All shared data types (DTOs, interfaces, etc.) between frontend and backend must live in `packages/types`.
-- Import shared types from `@repo/types` in both frontend and backend code.
+- Import shared types from `@repo/types` in both frontend and backend code. Example:
+  ```ts
+  import { ProfileResponse, UpdateProfileRequest } from '@repo/types/dto'
+  ```
 
 ### 4. General
 
@@ -64,19 +67,6 @@ This is a monorepo managed with [Turborepo](https://turbo.build/), using [pnpm w
 - Use pnpm for dependency management and scripts.
 - Use Turborepo for running, building, and caching tasks across the monorepo.
 - Keep code modular and maintainable.
-
-## Example Imports
-
-- **Frontend:**
-  ```ts
-  import { ProfileResponse } from '@repo/types/dto'
-  import { UpdateProfileRequest } from '@repo/types/dto'
-  ```
-- **Backend:**
-  ```ts
-  import { ProfileResponse } from '@repo/types/dto'
-  import { UpdateProfileRequest } from '@repo/types/dto'
-  ```
 
 ## Additional Notes
 
