@@ -22,6 +22,68 @@ This is a monorepo managed with [Turborepo](https://turbo.build/), using [pnpm w
 - Use [TanStack Query](https://tanstack.com/query/latest) for all client based data fetching in the frontend. Implement queries and mutations inside the `src/hooks` directory.
 - Server components should be used for data fetching where possible if the data does not change based on user interaction and does not need to be synchronized.
 - Always prefer `useSuspenseQuery` in hooks to preload data on the server side for pages/components.
+- For queries to the backend api, create a hook and supporting files:
+  - `src/hooks/useEntity/useEntity.ts` - the main hook file exporting the query/mutation hooks. Example code:
+    ```ts
+    import { UpdateProfileRequest } from '@repo/types/dto'
+    import { useMutation, useQueryClient, useSuspenseQuery } from '@tanstack/react-query'
+    import { updateProfile } from './profile.queries'
+    import { createProfileQueryOptions, QUERY_KEY } from './profile.options'
+
+    export function useProfile() {
+      const queryClient = useQueryClient()
+      const { data } = useSuspenseQuery(createProfileQueryOptions())
+
+      const mutation = useMutation({
+        mutationFn: updateProfile,
+        onSuccess: () => {
+          void queryClient.invalidateQueries({ queryKey: [QUERY_KEY] })
+        },
+      })
+
+      const updateProfileMutation = (request: UpdateProfileRequest) => {
+        mutation.mutate(request)
+      }
+
+      return { data, updateProfile: updateProfileMutation }
+    }
+    ```
+  - `src/hooks/useEntity/entity.queries.ts` - the actual functions calling the api. Example code:
+    ```ts
+    import { UpdateProfileRequest, ProfileResponse } from '@repo/types/dto'
+
+    export async function fetchProfile(): Promise<ProfileResponse> {
+      const response = await fetch('/api/profile')
+      if (!response.ok) {
+        throw new Error('Failed to fetch profile')
+      }
+      return await response.json() as ProfileResponse
+    }
+
+    export async function updateProfile(request: UpdateProfileRequest): Promise<void> {
+      const response = await fetch('/api/profile', {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(request),
+      })
+      if (!response.ok) {
+        throw new Error('Failed to update profile')
+      }
+    }
+    ```
+  - `src/hooks/useEntity/entity.options.ts` - the query/mutation keys, fetchers, and config generator. Example code:
+    ```ts
+    import { QueryOptions } from '@tanstack/react-query'
+    import { fetchProfile } from './profile.queries'
+    
+    export const QUERY_KEY = 'profile'
+    export function createProfileQueryOptions(): QueryOptions {
+      return {
+        queryKey: [QUERY_KEY],
+        queryFn: fetchProfile,
+      }
+    }
+    ```
 - Split query/mutation options (such as keys, fetchers, and config) into a separate `entity.options.ts` (or similar) file so they can be reused for prefetching and in hooks.
 
 ### 2. Backend Code

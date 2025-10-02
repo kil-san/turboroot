@@ -1,6 +1,7 @@
-import { BadRequestException, Body, Controller, Get, Post } from '@nestjs/common'
+import { BadRequestException, Body, Controller, Get, Post, UsePipes } from '@nestjs/common'
 import { ProfileService } from '@services/profile'
 import { UpdateProfileRequestSchema, type UpdateProfileRequest, type ProfileResponse } from '@repo/types/dto'
+import { ZodValidationPipe } from 'nestjs-zod'
 
 @Controller('profile')
 export class ProfileController {
@@ -17,12 +18,9 @@ export class ProfileController {
   }
 
   @Post()
+  @UsePipes(new ZodValidationPipe(UpdateProfileRequestSchema))
   updateProfile(@Body() payload: UpdateProfileRequest): ProfileResponse {
-    const result = UpdateProfileRequestSchema.safeParse(payload)
-    if (!result.success) {
-      throw new BadRequestException(result.error.message)
-    }
-    const profile = this.profileService.updateProfile(result.data)
+    const profile = this.profileService.updateProfile(payload)
 
     return {
       firstName: profile.firstName,
