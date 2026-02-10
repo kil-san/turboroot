@@ -1,25 +1,21 @@
-import { UpdateProfileRequest, ProfileResponse } from '@repo/types/dto'
+import { ProfileResponse, UpdateProfileRequest } from '@repo/common'
+
+import { fetcher } from '@/tanstack/fetcher'
 
 export async function getProfile(): Promise<ProfileResponse> {
-  const response = await fetch(`${process.env.API_ENDPOINT}/profile`, {
+  const response = await fetcher<ProfileResponse>('/profile', {
     method: 'GET',
   })
-  if (!response.ok) {
-    throw new Error('Network response was not ok')
-  }
-  return (await response.json()) as ProfileResponse
+
+  return response
 }
 
 export async function updateProfile(request: UpdateProfileRequest): Promise<ProfileResponse> {
-  const response = await fetch(`${process.env.API_ENDPOINT}/profile`, {
+  const response = await fetcher<ProfileResponse>('/profile', {
     method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
+    headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(request),
   })
-  if (!response.ok) {
-    throw new Error('Network response was not ok')
-  }
-  return (await response.json()) as ProfileResponse
+
+  return response
 }

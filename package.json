@@ -5,16 +5,18 @@
     "build": "turbo run build",
     "dev": "turbo run dev",
     "lint": "turbo run lint",
-    "format": "prettier --write \"**/*.{ts,tsx,md}\"",
+    "format": "eslint . --fix --debug && prettier --write \"**/*.{ts,tsx,md}\"",
     "check-types": "turbo run check-types",
     "prepare": "husky"
   },
   "lint-staged": {
     "*.{js,ts,jsx,tsx}": [
+      "eslint . --fix",
       "prettier --write"
     ]
   },
   "devDependencies": {
+    "@repo/eslint-config": "workspace:*",
     "husky": "^9.1.7",
     "lint-staged": "^16.2.3",
     "prettier": "^3.6.2",

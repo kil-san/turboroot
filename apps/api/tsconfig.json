@@ -1,21 +1,16 @@
 {
   "extends": "@repo/typescript-config/nestjs.json",
   "compilerOptions": {
+    "strictPropertyInitialization": false,
     "outDir": "./dist",
-    "baseUrl": "./src",
+    "baseUrl": "./",
     "paths": {
-      "@controllers": [
-        "controllers"
-      ],
-      "@controllers/*": [
-        "controllers/*"
-      ],
-      "@services": [
-        "services"
-      ],
-      "@services/*": [
-        "services/*"
-      ],
+      "@lib/auth": ["libs/auth/src"],
+      "@lib/auth/*": ["libs/auth/src/*"],
+      "@lib/repository": ["libs/repository/src"],
+      "@lib/repository/*": ["libs/repository/src/*"],
+      "@lib/user": ["libs/user/src"],
+      "@lib/user/*": ["libs/user/src/*"]
     }
   }
 }

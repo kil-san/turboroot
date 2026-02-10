@@ -3,14 +3,16 @@
 This Turborepo starter is maintained by the Turborepo core team.
 
 ## Using this example
+
 # Turboroot Monorepo
+
 Run the following command:
 
 ```sh
+
 ```
 
 ## What's inside?
-
 
 # Turboroot Boilerplate Monorepo
 
@@ -33,14 +35,16 @@ packages/
 ```
 
 ### Apps
+
 - **api**: Production-ready [NestJS](https://nestjs.com/) backend. Modular service/controller structure, Jest tests, and a `Dockerfile` for containerization. See `apps/api/Dockerfile` for building and running the backend in Docker.
 - **web**: [Next.js](https://nextjs.org/) frontend with [shadcn/ui](https://ui.shadcn.com/) and [Tailwind CSS](https://tailwindcss.com/). Uses [TanStack Query](https://tanstack.com/query/latest) for all data fetching.
 
 ### Packages
+
 - **types**: All DTOs, interfaces, and types shared between frontend and backend. Import as:
-	```ts
-	import { ProfileDto } from '@repo/types/dto'
-	```
+  ```ts
+  import { ProfileDto } from '@repo/types/dto'
+  ```
 - **eslint-config**: Centralized ESLint rules for consistent linting.
 - **typescript-config**: Shared TypeScript configs for all apps/packages.
 
@@ -61,25 +65,30 @@ packages/
 ## Getting Started
 
 ### Prerequisites
+
 - [Node.js](https://nodejs.org/) (v18+ recommended)
 - [pnpm](https://pnpm.io/)
 
-
 ### Setup environment variables
+
 Copy the example environment file and edit as needed:
+
 ```sh
 cp .env.example .env
 ```
 
 ### Install dependencies
+
 ```sh
 pnpm install
 ```
 
 ### Run all apps (dev mode)
+
 ```sh
 pnpm turbo run dev
 ```
+
 - Frontend: [http://localhost:3000](http://localhost:3000)
 - Backend: [http://localhost:4000](http://localhost:3001)
 

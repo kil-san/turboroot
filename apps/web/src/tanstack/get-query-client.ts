@@ -1,4 +1,6 @@
-import { QueryClient, defaultShouldDehydrateQuery, isServer } from '@tanstack/react-query'
+import { defaultShouldDehydrateQuery, isServer, MutationCache, QueryCache, QueryClient } from '@tanstack/react-query'
+
+import { isUnauthorized, redirectToLogin } from './auth'
 
 function makeQueryClient() {
   return new QueryClient({
@@ -11,6 +13,16 @@ function makeQueryClient() {
         shouldDehydrateQuery: (query) => defaultShouldDehydrateQuery(query) || query.state.status === 'pending',
       },
     },
+    queryCache: new QueryCache({
+      onError: (error) => {
+        if (isUnauthorized(error)) redirectToLogin()
+      },
+    }),
+    mutationCache: new MutationCache({
+      onError: (error) => {
+        if (isUnauthorized(error)) redirectToLogin()
+      },
+    }),
   })
 }
 

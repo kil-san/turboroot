@@ -24,6 +24,7 @@ This is a monorepo managed with [Turborepo](https://turbo.build/), using [pnpm w
 - Always prefer `useSuspenseQuery` in hooks to preload data on the server side for pages/components.
 - For queries to the backend api, create a hook and supporting files:
   - `src/hooks/useEntity/useEntity.ts` - the main hook file exporting the query/mutation hooks. Example code:
+
     ```ts
     import { UpdateProfileRequest } from '@repo/types/dto'
     import { useMutation, useQueryClient, useSuspenseQuery } from '@tanstack/react-query'
@@ -48,7 +49,9 @@ This is a monorepo managed with [Turborepo](https://turbo.build/), using [pnpm w
       return { data, updateProfile: updateProfileMutation }
     }
     ```
+
   - `src/hooks/useEntity/entity.queries.ts` - the actual functions calling the api. Example code:
+
     ```ts
     import { UpdateProfileRequest, ProfileResponse } from '@repo/types/dto'
 
@@ -57,7 +60,7 @@ This is a monorepo managed with [Turborepo](https://turbo.build/), using [pnpm w
       if (!response.ok) {
         throw new Error('Failed to fetch profile')
       }
-      return await response.json() as ProfileResponse
+      return (await response.json()) as ProfileResponse
     }
 
     export async function updateProfile(request: UpdateProfileRequest): Promise<void> {
@@ -71,11 +74,13 @@ This is a monorepo managed with [Turborepo](https://turbo.build/), using [pnpm w
       }
     }
     ```
+
   - `src/hooks/useEntity/entity.options.ts` - the query/mutation keys, fetchers, and config generator. Example code:
+
     ```ts
     import { QueryOptions } from '@tanstack/react-query'
     import { fetchProfile } from './profile.queries'
-    
+
     export const QUERY_KEY = 'profile'
     export function createProfileQueryOptions(): QueryOptions {
       return {
@@ -84,6 +89,7 @@ This is a monorepo managed with [Turborepo](https://turbo.build/), using [pnpm w
       }
     }
     ```
+
 - Split query/mutation options (such as keys, fetchers, and config) into a separate `entity.options.ts` (or similar) file so they can be reused for prefetching and in hooks.
 
 ### 2. Backend Code
@@ -96,6 +102,7 @@ This is a monorepo managed with [Turborepo](https://turbo.build/), using [pnpm w
 - Organize code under `src/services` and `src/controllers`.
 - Create controller dtos in `packages/types` and import them from `@repo/types`.
 - Define dtos with `zod` in `packages/types` and infer TypeScript types from them. Example:
+
   ```ts
   import { z } from 'zod'
 
@@ -106,6 +113,7 @@ This is a monorepo managed with [Turborepo](https://turbo.build/), using [pnpm w
 
   export type UpdateProfileRequest = z.infer<typeof UpdateProfileRequestSchema>
   ```
+
 - Always validate incoming requests in controllers using `zod` schemas and return bad request appropriately.
 - Services should define their own types in `service.types.ts` and must never import from `@repo/types`.
 - Always map service responses to dtos before returning them from controllers.

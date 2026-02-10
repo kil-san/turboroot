@@ -1,0 +1,34 @@
+{
+  "name": "@repo/database",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "tsc --watch",
+    "build": "tsc",
+    "typeorm": "typeorm-ts-node-commonjs",
+    "migration:create": "dotenvx run -- pnpm typeorm migration:create",
+    "migration:generate": "dotenvx run -- pnpm typeorm migration:generate -d src/datasource.ts",
+    "migration:apply": "dotenvx run -- pnpm typeorm migration:run -d src/datasource.ts",
+    "migration:revert": "dotenvx run -- pnpm typeorm migration:revert -d src/datasource.ts"
+  },
+  "exports": {
+    "types": "./src/index.ts",
+    "default": "./dist/index.js"
+  },
+  "devDependencies": {
+    "@dotenvx/dotenvx": "^1.52.0",
+    "@repo/eslint-config": "workspace:*",
+    "@repo/typescript-config": "workspace:*",
+    "typescript": "latest"
+  },
+  "dependencies": {
+    "@nestjs/common": "^11.0.1",
+    "@nestjs/config": "^4.0.2",
+    "@nestjs/typeorm": "^11.0.0",
+    "@repo/common": "workspace:*",
+    "@repo/domain": "workspace:*",
+    "pg": "^8.18.0",
+    "typeorm": "^0.3.28",
+    "zod": "^4.1.11"
+  }
+}
