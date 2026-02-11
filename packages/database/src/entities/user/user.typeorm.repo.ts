@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm/dist/common/typeorm.decorators'
+import { NULL_UUID } from '@repo/common'
 import { CreateUserData, FindUserWhere, UpdateUserData, User, UserRepository } from '@repo/domain'
 import { Repository } from 'typeorm'
 
@@ -55,8 +56,8 @@ export class TypeOrmUserRepository implements UserRepository {
   async create(data: CreateUserData): Promise<User> {
     const newUser = this.repository.create({
       ...data,
-      createdBy: 0,
-      updatedBy: 0,
+      createdBy: NULL_UUID,
+      updatedBy: NULL_UUID,
       createdAt: new Date(),
       updatedAt: new Date(),
     })

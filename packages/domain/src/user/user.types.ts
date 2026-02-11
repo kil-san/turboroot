@@ -2,10 +2,10 @@ export type FindUserWherePayload =
   | {
       email: string
 
-      id?: number
+      id?: string
     }
   | {
-      id: number
+      id: string
       email?: string
     }
 
@@ -19,5 +19,5 @@ export type CreateUserPayload = {
 export type UpdateUserPayload = {
   firstName: string
   lastName: string
-  updatedBy: number
+  updatedBy: string
 }

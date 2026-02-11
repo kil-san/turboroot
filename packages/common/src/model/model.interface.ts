@@ -1,7 +1,7 @@
 export interface Model {
-  id: number
+  id: string
   createdAt: Date
   updatedAt: Date
-  createdBy: number
-  updatedBy: number
+  createdBy: string
+  updatedBy: string
 }

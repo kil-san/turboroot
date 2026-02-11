@@ -1,3 +1,4 @@
+import { NULL_UUID } from './constants'
 import type {
   ProfileResponse,
   SigninRequest,
@@ -32,6 +33,7 @@ export type {
 }
 
 export {
+  NULL_UUID,
   ProfileResponseSchema,
   SigninRequestSchema,
   SigninResponseSchema,

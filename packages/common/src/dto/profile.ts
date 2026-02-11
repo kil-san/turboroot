@@ -6,7 +6,7 @@ export const UpdateProfileRequestSchema = z.object({
 })
 
 export const ProfileResponseSchema = z.object({
-  id: z.number(),
+  id: z.uuidv4(),
   email: z.email(),
   firstName: z.string(),
   lastName: z.string(),

@@ -8,7 +8,7 @@ export const SignupRequestSchema = z.object({
 })
 
 export const SignupResponseSchema = z.object({
-  id: z.number(),
+  id: z.uuidv4(),
   email: z.email(),
   firstName: z.string(),
   lastName: z.string(),

@@ -13,8 +13,9 @@ export class UserService {
   async create(data: CreateUserPayload): Promise<User> {
     const newUser = this.usersRepository.create({
       ...data,
-      createdBy: 0,
-      updatedBy: 0,
+      // These are ignored at the repository level
+      createdBy: 'system',
+      updatedBy: 'system',
     })
     return newUser
   }

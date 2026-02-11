@@ -1,12 +1,12 @@
 import { Column, CreateDateColumn, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm'
 
 export abstract class BaseEntity<T> {
-  constructor(partial: Omit<T, 'id'> & { id?: number }) {
+  constructor(partial: Omit<T, 'id'> & { id?: string }) {
     Object.assign(this, partial)
   }
 
-  @PrimaryGeneratedColumn('increment')
-  id: number
+  @PrimaryGeneratedColumn('uuid')
+  id: string
 
   @CreateDateColumn({ type: 'timestamptz' })
   createdAt: Date
@@ -14,9 +14,9 @@ export abstract class BaseEntity<T> {
   @UpdateDateColumn({ type: 'timestamptz' })
   updatedAt: Date
 
-  @Column({ name: 'created_by' })
-  createdBy: number
+  @Column({ name: 'created_by', type: 'uuid' })
+  createdBy: string
 
-  @Column({ name: 'updated_by' })
-  updatedBy: number
+  @Column({ name: 'updated_by', type: 'uuid' })
+  updatedBy: string
 }
