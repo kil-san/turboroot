@@ -4,7 +4,7 @@ export interface FetcherError extends Error {
 }
 
 export async function fetcher<T = any>(path: string, init?: RequestInit): Promise<T> {
-  const response = await fetch(`${process.env.API_ENDPOINT}${path}`, {
+  const response = await fetch(`${process.env.NEXT_PUBLIC_API_ENDPOINT}${path}`, {
     ...init,
     credentials: 'include', // <-- important for sending cookies
   })

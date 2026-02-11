@@ -5,6 +5,7 @@ import { PassportModule } from '@nestjs/passport'
 import { DatabaseModule, TypeOrmUserRepository } from '@repo/database'
 import { UserService } from '@repo/domain'
 
+import AppConfig from '../app.config'
 import AuthConfig from './auth.config'
 import { AuthController } from './auth.controller'
 import { AuthService } from './auth.service'
@@ -16,6 +17,7 @@ import { JwtStrategy } from './jwt.strategy'
     DatabaseModule,
     PassportModule.register({ defaultStrategy: 'jwt' }),
     ConfigModule.forFeature(AuthConfig),
+    ConfigModule.forFeature(AppConfig),
     JwtModule.registerAsync({
       imports: [ConfigModule.forFeature(AuthConfig)],
       useFactory: (config: ConfigType<typeof AuthConfig>): JwtModuleOptions => {

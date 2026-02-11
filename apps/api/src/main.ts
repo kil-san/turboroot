@@ -10,12 +10,12 @@ import { AppModule } from './app.module'
 async function bootstrap() {
   const app = await NestFactory.create(AppModule)
   app.use(cookieParser())
-  app.enableCors({
-    origin: 'http://localhost:3000',
-    credentials: true,
-  })
   const configService = app.get(ConfigService)
   const config = configService.get<AppConfigOptions>('app') as AppConfigOptions
+  app.enableCors({
+    origin: config.corsOrigin?.split(',').map((origin) => origin.trim()),
+    credentials: true,
+  })
   await app.listen(config.port)
 }
 bootstrap()
