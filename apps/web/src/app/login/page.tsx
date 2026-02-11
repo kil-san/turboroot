@@ -1,9 +1,13 @@
+import { Suspense } from 'react'
+
 import LoginForm from './components/LoginForm/LoginForm'
 
 export default function LoginPage() {
   return (
     <div className='flex min-h-screen items-center justify-center bg-gray-50'>
-      <LoginForm />
+      <Suspense>
+        <LoginForm />
+      </Suspense>
     </div>
   )
 }

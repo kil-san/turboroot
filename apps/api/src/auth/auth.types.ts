@@ -1,11 +1,11 @@
 export type AuthPayload = {
-  id: number
+  id: string
 }
 
 export type DecodedAuthResult = {
-  id: number
+  id: string
 }
 
 export type ActiveUser = {
-  id: number
+  id: string
 }
