@@ -11,10 +11,8 @@
     "migration:apply": "dotenvx run -- pnpm typeorm migration:run -d src/datasource.ts",
     "migration:revert": "dotenvx run -- pnpm typeorm migration:revert -d src/datasource.ts"
   },
-  "exports": {
-    "types": "./src/index.ts",
-    "default": "./dist/index.js"
-  },
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "devDependencies": {
     "@dotenvx/dotenvx": "^1.52.0",
     "@repo/eslint-config": "workspace:*",
